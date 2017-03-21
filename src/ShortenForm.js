@@ -85,10 +85,12 @@ class ShortenForm extends Component {
   render() {
     const { validURL } = this.state;
     let buttonClasses = 'button is-fullwidth is-large is-outlined is-danger is-disabled';
+    let msgClasses = 'help is-danger has-text-centered';
     let urlIcon = 'fa fa-thumbs-down';
     if (validURL) {
       buttonClasses = 'button is-fullwidth is-large is-outlined is-danger';
       urlIcon = 'fa fa-check';
+      msgClasses = 'help is-success';
     }
     return (
       <section className="section">
@@ -108,6 +110,7 @@ class ShortenForm extends Component {
                 <span className="icon is-large">
                   <i className={urlIcon}></i>
                 </span>
+                <p className={msgClasses}>{this.state.msg || ''}</p>
               </p>
             </div>
           </div>
