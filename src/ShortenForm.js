@@ -52,7 +52,7 @@ class ShortenForm extends Component {
     if (!this.validLength(url)) {
       return {
         validURL: false,
-        msg: `That URL is already shorter than what we can give you (${SHORTENED_LENGTH}).`,
+        msg: `That URL is already shorter than what we can give you (${SHORTENED_LENGTH} letters/symbols long).`,
       };
     }
     return { validURL: true, msg: "Hit 'Enter' or click 'shorten' button to get a shorter URL." };
@@ -98,7 +98,7 @@ class ShortenForm extends Component {
           <div className="columns">
             <div className="column field is-half is-offset-one-quarter">
               <label className="label title">Pili-fy your URL</label>
-              <p className="control has-icon has-icon-right">
+              <div className="control has-icon has-icon-right">
                 <input
                   className="input is-large is-danger"
                   type="url"
@@ -111,7 +111,7 @@ class ShortenForm extends Component {
                   <i className={urlIcon}></i>
                 </span>
                 <p className={msgClasses}>{this.state.msg || ''}</p>
-              </p>
+              </div>
             </div>
           </div>
           <div className="columns ">
