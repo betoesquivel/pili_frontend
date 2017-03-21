@@ -17,7 +17,7 @@ class ShortenForm extends Component {
   }
 
   isValidURL(url) {
-    return true;
+    return typeof url === 'string' && url.length > 0;
   }
 
   updateText(event) {
