@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import sadCat from './sadcat.jpg';
 
 const sleep = function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -14,7 +15,7 @@ class ShortURLRedirect extends Component {
     const { urlPromise } = props;
     urlPromise
       .then(url => this.setState({ url: url || 'Not found' }))
-      .then(() => sleep(2000))
+      .then(() => sleep(5000))
       .then(() => {
         if (this.state.url !== 'Not found') {
           window.open(this.state.url, '_blank')
@@ -26,15 +27,20 @@ class ShortURLRedirect extends Component {
 
   render() {
     const url = this.state.url;
+    const loading = url.length <= 0;
+    const found = !loading && url !== 'Not found';
+    const notFound = !loading && url === 'Not found';
     return (
       <section className="section">
-      { url.length <= 0 ?
+      { loading ?
         `Loading`: '' }
-      { url.length > 0  && url !== 'Not found'?
+      { found ?
         `Redirecting to ${url}...`: '' }
-      { url.length > 0  && url === 'Not found'?
+      { notFound ?
         `We couldn't find that short URL :(
         Taking you back to our Home page...`: '' }
+      { notFound ?
+        <img src={sadCat} className="cat-apology" alt="sad cat" /> : '' }
       </section>
     );
   }
