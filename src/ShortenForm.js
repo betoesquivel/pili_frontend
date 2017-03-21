@@ -28,7 +28,8 @@ class ShortenForm extends Component {
     });
   }
 
-  onClick() {
+  onClick(e) {
+    e.preventDefault();
     this.props.shorten({
       variables: {
         short: {
@@ -45,33 +46,44 @@ class ShortenForm extends Component {
 
   render() {
     const { validURL } = this.state;
-    let buttonClasses = 'button is-large is-outlined is-danger is-disabled';
+    let buttonClasses = 'button is-fullwidth is-large is-outlined is-danger is-disabled';
     let urlIcon = 'fa fa-thumbs-down';
     if (validURL) {
-      buttonClasses = 'button is-large is-outlined is-danger';
+      buttonClasses = 'button is-fullwidth is-large is-outlined is-danger';
       urlIcon = 'fa fa-check';
     }
     return (
       <section className="section">
-        <div className="field">
-          <label className="label title">Pili-fy your URL</label>
-          <p className="control has-icon has-icon-right">
-            <input
-              className="input is-large is-danger"
-              type="url"
-              placeholder="http://your-long-url.com/goes/here"
-              pattern="https?://.+"
-              required={true}
-              onChange={this.updateText.bind(this)}
-              />
-            <span className="icon is-small">
-              <i className={urlIcon}></i>
-            </span>
-          </p>
-        </div>
-        <a
-          className={buttonClasses}
-          onClick={this.onClick.bind(this)}>Shorten</a>
+        <form onSubmit={this.onClick.bind(this)}>
+          <div className="columns">
+            <div className="column field is-half is-offset-one-quarter">
+              <label className="label title">Pili-fy your URL</label>
+              <p className="control has-icon has-icon-right">
+                <input
+                  className="input is-large is-danger"
+                  type="url"
+                  placeholder="http://your-long-url.com/goes/here"
+                  pattern="https?://.+"
+                  required={true}
+                  onChange={this.updateText.bind(this)}
+                  />
+                <span className="icon is-small">
+                  <i className={urlIcon}></i>
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="columns ">
+            <div className="column field is-half is-offset-one-quarter">
+              <p className="control">
+                <button
+                  type="submit"
+                  className={buttonClasses}
+                  >Shorten</button>
+              </p>
+            </div>
+          </div>
+        </form>
       </section>
     );
   }
