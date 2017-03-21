@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { gql, graphql } from 'react-apollo';
 import {
   Link,
   Route,
@@ -12,12 +13,26 @@ import './App.css';
 import ShortURLs from './ShortURLs';
 import ShortenForm from './ShortenForm';
 
+const tapLogObject = function tapLogObject(obj) {
+  console.log(obj);
+  return obj;
+};
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
       activeMenu: false,
     };
+  }
+
+  hrefParse(url) {
+    let parsed = url;
+    if (url.indexOf('http://') <= 0 && url.indexOf('https://') <= 0) {
+      parsed = `http://${url}`;
+    }
+    console.log(parsed);
+    return parsed;
   }
 
   dropdown() {
@@ -45,9 +60,27 @@ class App extends Component {
               short={{...match.params}}
             />
           )} />
-          <Route exact path="/:shortCode" render={({match}) => (
-            <p>Visit what matches {match.params.shortCode}</p>
-          )} />
+          <Route exact path="/:shortCode" render={({match}) => {
+            this.props.visit({
+              variables: {
+                short: {
+                  ...match.params,
+                }
+              }
+            })
+            .then(tapLogObject)
+            .then(({
+              data: {visitShortURL: {url}}
+            }) => tapLogObject(url))
+            .then(url => window.open(this.hrefParse(url), '_self'));
+            return (
+              <div className="card">
+                Loading data...
+                <div className="card-content is-loading">
+                </div>
+              </div>
+            );
+          }}/>
         </div>
       </Router>
     );
@@ -101,4 +134,14 @@ const Header = (props) => (
   </div>
 );
 
-export default App;
+
+const visitShortURL = gql`
+mutation visit($short: ShortKeyInput!){
+	visitShortURL(shortKey: $short){
+    url
+  }
+}
+`;
+const withMutation = graphql(visitShortURL, {name: 'visit'})(App);
+
+export default withMutation;
