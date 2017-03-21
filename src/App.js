@@ -37,9 +37,6 @@ class App extends Component {
           <Route exact path="/:shortCode" render={({match}) => (
             <p>Visit what matches {match.params.shortCode}</p>
           )} />
-          <Route exact path="/custom/:owner/:shortCode" render={({match}) => (
-            <p>Private: visit what matches {JSON.stringify(match.params)}</p>
-          )} />
         </div>
       </Router>
     );
