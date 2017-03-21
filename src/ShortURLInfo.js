@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 
 class ShortURLInfo extends Component {
   hrefParse(url) {
@@ -37,9 +38,11 @@ class ShortURLInfo extends Component {
           <div className="level-item has-text-centered">
             <div>
               <p className="heading">Shortened</p>
-              <p className="title">
-                {`pili.com/${shortCode}`}
-              </p>
+              <Link to={`/${shortCode}`}>
+                <p className="title">
+                  {`pili.surge.sh/${shortCode}`}
+                </p>
+              </Link>
             </div>
           </div>
           <div className="level-item has-text-centered">
