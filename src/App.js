@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {
-  BrowserRouter as Router,
+  Link,
   Route,
   Redirect,
+  BrowserRouter as Router,
 } from 'react-router-dom';
 
 import logo from './pililogo.svg';
@@ -62,17 +63,13 @@ const Header = (props) => (
             className={
               `nav-right nav-menu ${props.activeMenu ? 'is-active': ''}`
             }>
-            <a className="nav-item is-active">
-              Home
-            </a>
-            <a className="nav-item">
-              Examples
-            </a>
-            <a className="nav-item">
-              Documentation
-            </a>
+            <Link to="/data/public" className="nav-item is-active">
+              All public links
+            </Link>
             <span className="nav-item">
-              <a className="button is-primary is-inverted">
+              <a
+                href="https://github.com/betoesquivel/pili_frontend"
+                className="button is-primary is-inverted">
                 <span className="icon">
                   <i className="fa fa-github"></i>
                 </span>
