@@ -7,6 +7,11 @@ const tapLogObject = function tapLogObject(obj) {
   return obj;
 };
 
+const hostname = () => window.location.hostname;
+const SHORT_CODE_LENGTH = 9;
+const SHORTENED_LENGTH = hostname().length + SHORT_CODE_LENGTH + 1;
+const urlRegex = /^(https?:\/\/)[^.]+(\.[^.]+)+$/i;
+
 class ShortenForm extends Component {
   constructor() {
     super();
@@ -16,15 +21,48 @@ class ShortenForm extends Component {
     };
   }
 
+  validType(url) {
+    return typeof url === 'string';
+  }
+
+  validLength(url) {
+    return url.length > SHORTENED_LENGTH;
+  }
+
+  validPattern(url) {
+    const matches = urlRegex.exec(url);
+    urlRegex.lastIndex = 0;
+
+    return matches ? true : false;
+  }
+
   isValidURL(url) {
-    return typeof url === 'string' && url.length > 0;
+    if (!this.validType(url)) {
+      return {
+        validURL: false,
+        msg: 'Please, write a long URL for us to shorten',
+      };
+    }
+    if (!this.validPattern(url)) {
+      return {
+        validURL: false,
+        msg: `That is not a URL, please make sure it contains http:// https:// or whatever other protocol at the beginning.`,
+      };
+    }
+    if (!this.validLength(url)) {
+      return {
+        validURL: false,
+        msg: `That URL is already shorter than what we can give you (${SHORTENED_LENGTH}).`,
+      };
+    }
+    return { validURL: true, msg: "Hit 'Enter' or click 'shorten' button to get a shorter URL." };
   }
 
   updateText(event) {
     const val = event.target.value;
     this.setState({
       url: val,
-      validURL: this.isValidURL(val),
+      ...this.isValidURL(val),
     });
   }
 
