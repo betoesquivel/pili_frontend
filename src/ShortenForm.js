@@ -28,12 +28,12 @@ class ShortenForm extends Component {
     return (
       <section className="section">
         <div className="field">
-          <label className="label title">Long URL</label>
+          <label className="label title">Pili-fy your URL</label>
           <p className="control has-icon has-icon-right">
             <input
               className="input is-large is-danger"
               type="url"
-              placeholder="not pili"
+              placeholder="http://your-long-url.com/goes/here"
               pattern="https?://.+"
               required={true}
               onChange={this.updateText.bind(this)}

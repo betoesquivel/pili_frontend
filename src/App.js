@@ -29,7 +29,9 @@ class App extends Component {
       <Router>
         <div className="App">
           <Header dropdown={this.dropdown.bind(this)} activeMenu={this.state.activeMenu}/>
-          <Route exact path="/" component={ShortenForm} />
+          <Route exact path="/" render={({match}) => (
+            <ShortenForm />
+          )}/>
           <Route exact path="/data" render={() => (
             <Redirect to="/data/public/"/>
           )}/>
@@ -81,7 +83,7 @@ const Header = (props) => (
       </header>
     </div>
     <div className="hero-body">
-      <h2 className="title">Shorten URLs with Pili</h2>
+      <h2 className="title">Pili means small in Nahuatl.</h2>
     </div>
   </div>
 );
