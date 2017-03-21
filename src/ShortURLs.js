@@ -11,7 +11,7 @@ class ShortURLs extends Component {
         {typeof items !== 'undefined' ?
           <section className="shortURL-list section">
             {items.map((item, i) => (
-              <ShortURLInfo key={i} {...item} />
+              <ShortURLInfo key={i} {...item} hrefParse={this.props.hrefParse}/>
             ))}
           </section> : ''}
       </div>

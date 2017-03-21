@@ -28,7 +28,7 @@ class App extends Component {
 
   hrefParse(url) {
     let parsed = url;
-    if (url.indexOf('http://') <= 0 && url.indexOf('https://') <= 0) {
+    if (url.indexOf('http://') < 0 && url.indexOf('https://') < 0) {
       parsed = `http://${url}`;
     }
     console.log(parsed);
@@ -52,11 +52,13 @@ class App extends Component {
           )}/>
           <Route exact path="/data/:owner" render={({match}) => (
             <ShortURLs
+              hrefParse={this.hrefParse}
               short={{...match.params}}
             />
           )} />
           <Route exact path="/data/:owner/:shortCode" render={({match}) => (
             <ShortURLs
+              hrefParse={this.hrefParse}
               short={{...match.params}}
             />
           )} />

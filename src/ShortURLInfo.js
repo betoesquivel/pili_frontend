@@ -2,15 +2,6 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 
 class ShortURLInfo extends Component {
-  hrefParse(url) {
-    let parsed = url;
-    if (url.indexOf('http://') <= 0 && url.indexOf('https://') <= 0) {
-      parsed = `http://${url}`;
-    }
-    console.log(parsed);
-    return parsed;
-  }
-
   render() {
     const {
       shortCode,
@@ -28,7 +19,7 @@ class ShortURLInfo extends Component {
         <div className="has-text-centered">
           <div>
             <p className="heading">link</p>
-            <a href={this.hrefParse(url)} className="is-large" target="_blank">
+            <a href={this.props.hrefParse(url)} className="is-large" target="_blank">
               {url}
             </a>
           </div>
