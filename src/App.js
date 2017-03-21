@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-//import {
-  //BrowserRouter as Router,
-  //Route,
-//} from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
 import logo from './pililogo.svg';
 import './App.css';
@@ -24,11 +25,17 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <Header dropdown={this.dropdown.bind(this)} activeMenu={this.state.activeMenu}/>
-        <ShortenForm />
-        <ShortURLInfo />
-      </div>
+      <Router>
+        <div className="App">
+          <Header dropdown={this.dropdown.bind(this)} activeMenu={this.state.activeMenu}/>
+          <Route exact path="/" component={ShortenForm} />
+          <Route exact path="/data" render={() => (
+            <Redirect to="/data/public/"/>
+          )}/>
+          <Route exact path="/data/:owner" component={ShortURLInfo} />
+          <Route path="/data/:owner/:shortCode" component={ShortURLInfo} />
+        </div>
+      </Router>
     );
   }
 }
