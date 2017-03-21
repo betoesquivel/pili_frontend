@@ -12,6 +12,7 @@ import './App.css';
 
 import ShortURLs from './ShortURLs';
 import ShortenForm from './ShortenForm';
+import ShortURLRedirect from './ShortURLRedirect';
 
 const tapLogObject = function tapLogObject(obj) {
   console.log(obj);
@@ -63,7 +64,7 @@ class App extends Component {
             />
           )} />
           <Route exact path="/:shortCode" render={({match}) => {
-            this.props.visit({
+            const urlPromise = this.props.visit({
               variables: {
                 short: {
                   ...match.params,
@@ -73,14 +74,11 @@ class App extends Component {
             .then(tapLogObject)
             .then(({
               data: {visitShortURL: {url}}
-            }) => tapLogObject(url))
-            .then(url => window.open(this.hrefParse(url), '_self'));
+            }) => tapLogObject(url));
+
+            //.then(url => window.open(this.hrefParse(url), '_self'));
             return (
-              <div className="card">
-                Loading data...
-                <div className="card-content is-loading">
-                </div>
-              </div>
+              <ShortURLRedirect urlPromise={ urlPromise } />
             );
           }}/>
         </div>
