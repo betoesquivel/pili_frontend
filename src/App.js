@@ -60,9 +60,9 @@ const Header = (props) => (
       <header className="nav">
         <div className="container">
           <div className="nav-left">
-            <a className="nav-item">
+            <Link to="/" className="nav-item">
               <img src={logo} className="App-logo" alt="logo" />
-            </a>
+            </Link>
           </div>
           <span className="nav-toggle" onClick={props.dropdown}>
             <span></span>
