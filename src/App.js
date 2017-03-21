@@ -9,7 +9,7 @@ import {
 import logo from './pililogo.svg';
 import './App.css';
 
-import ShortURLInfo from './ShortURLInfo';
+import ShortURLs from './ShortURLs';
 import ShortenForm from './ShortenForm';
 
 class App extends Component {
@@ -35,8 +35,16 @@ class App extends Component {
           <Route exact path="/data" render={() => (
             <Redirect to="/data/public/"/>
           )}/>
-          <Route exact path="/data/:owner" component={ShortURLInfo} />
-          <Route exact path="/data/:owner/:shortCode" component={ShortURLInfo} />
+          <Route exact path="/data/:owner" render={({match}) => (
+            <ShortURLs
+              short={{...match.params}}
+            />
+          )} />
+          <Route exact path="/data/:owner/:shortCode" render={({match}) => (
+            <ShortURLs
+              short={{...match.params}}
+            />
+          )} />
           <Route exact path="/:shortCode" render={({match}) => (
             <p>Visit what matches {match.params.shortCode}</p>
           )} />
