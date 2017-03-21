@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import { gql, graphql } from 'react-apollo';
+import { withRouter } from 'react-router';
+
+const tapLogObject = function tapLogObject(obj) {
+  console.log(obj);
+  return obj;
+};
 
 class ShortenForm extends Component {
   constructor() {
     super();
     this.state = {
       validURL: false,
+      url: '',
     };
   }
 
@@ -14,7 +22,25 @@ class ShortenForm extends Component {
 
   updateText(event) {
     const val = event.target.value;
-    this.setState({ validURL: this.isValidURL(val) });
+    this.setState({
+      url: val,
+      validURL: this.isValidURL(val),
+    });
+  }
+
+  onClick() {
+    this.props.shorten({
+      variables: {
+        short: {
+          url: this.state.url,
+        }
+      }
+    })
+    .then(tapLogObject)
+    .then(({
+      data: {createShortURL: {shortCode}}
+    }) => tapLogObject(shortCode))
+    .then(code => this.props.history.push(`/data/public/${code}`));
   }
 
   render() {
@@ -43,10 +69,26 @@ class ShortenForm extends Component {
             </span>
           </p>
         </div>
-        <a className={buttonClasses}>Shorten</a>
+        <a
+          className={buttonClasses}
+          onClick={this.onClick.bind(this)}>Shorten</a>
       </section>
     );
   }
 }
 
-export default ShortenForm;
+const createShortURL = gql`
+mutation shorten($short: NewShortURLInput!){
+	createShortURL(newShort: $short){
+    id
+    shortCode
+    url
+    owner
+    visits
+    lastVisited
+  }
+}
+`;
+const withMutation = graphql(createShortURL, {name: 'shorten'})(ShortenForm);
+const withMutationAndRouter = withRouter(withMutation)
+export default withMutationAndRouter;
