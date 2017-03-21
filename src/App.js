@@ -83,7 +83,12 @@ const Header = (props) => (
       </header>
     </div>
     <div className="hero-body">
-      <h2 className="title">Pili means small in Nahuatl.</h2>
+      <h2 className="title">
+        Pili means small in&nbsp;
+        <a className="link" href="https://en.wikipedia.org/wiki/Nahuatl" target="_blank">
+          <u>Nahuatl</u>
+        </a>.
+      </h2>
     </div>
   </div>
 );
