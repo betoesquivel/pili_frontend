@@ -18,6 +18,8 @@ class ShortenForm extends Component {
     this.state = {
       validURL: false,
       url: '',
+      customUrl: '',
+      customShortCode: '',
     };
   }
 
@@ -49,11 +51,15 @@ class ShortenForm extends Component {
         msg: `That is not a URL, please make sure it contains http:// https:// or whatever other protocol at the beginning.`,
       };
     }
-    if (!this.validLength(url)) {
-      return {
-        validURL: false,
-        msg: `That URL is already shorter than what we can give you (${SHORTENED_LENGTH} letters/symbols long).`,
-      };
+    if (this.state.customShortCode.length <= 0) {
+
+      if (!this.validLength(url)) {
+        return {
+          validURL: false,
+          msg: `That URL is already shorter than what we can give you (${SHORTENED_LENGTH} letters/symbols long).`,
+        };
+      }
+
     }
     return { validURL: true, msg: "Hit 'Enter' or click 'shorten' button to get a shorter URL." };
   }
@@ -66,12 +72,25 @@ class ShortenForm extends Component {
     });
   }
 
+  updateCustomText(event) {
+    const customShortCode = event.target.value;
+    const customUrl = `${hostname()}/${customShortCode}`;
+    this.setState({
+      ...this.isValidURL(this.state.url),
+    })
+    this.setState({
+      customUrl,
+      customShortCode,
+    });
+  }
+
   create(e) {
     e.preventDefault();
     this.props.shorten({
       variables: {
         short: {
           url: this.state.url,
+          shortCode: this.state.customShortCode,
         }
       }
     })
@@ -111,6 +130,23 @@ class ShortenForm extends Component {
                   <i className={urlIcon}></i>
                 </span>
                 <p className={msgClasses}>{this.state.msg || ''}</p>
+              </div>
+            </div>
+          </div>
+          <div className="columns">
+            <div className="column field is-half is-offset-one-quarter">
+              <label className="label title-2">Customize it if you want. </label>
+              <div className="control has-icon has-icon-right">
+                <input
+                  className="input is-large is-danger"
+                  placeholder="PickYourCustomUrl"
+                  pattern="[\w]*"
+                  onChange={this.updateCustomText.bind(this)}
+                  />
+                <span className="icon is-large">
+                  <i className={'fa fa-check'}></i>
+                </span>
+                <p className={'help has-text-centered'}>{this.state.customUrl || "We'll generate a short url at random"}</p>
               </div>
             </div>
           </div>
