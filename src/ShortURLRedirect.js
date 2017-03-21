@@ -39,8 +39,10 @@ class ShortURLRedirect extends Component {
       { notFound ?
         `We couldn't find that short URL :(
         Taking you back to our Home page...`: '' }
+      <section className="section">
       { notFound ?
-        <img src={sadCat} className="cat-apology" alt="sad cat" /> : '' }
+          <img src={sadCat} className="column cat-apology" alt="sad cat" /> : '' }
+        </section>
       </section>
     );
   }
