@@ -30,5 +30,7 @@ query urls($short: ShortKeyQueryInput!){
   }
 }
 `;
+//const withQuery = graphql(query, {
+  //pollInterval: 200,
 const withQuery = graphql(query)(ShortURLs);
 export default withQuery;
