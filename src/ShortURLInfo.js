@@ -18,9 +18,9 @@ class ShortURLInfo extends Component {
         <div className="has-text-centered">
           <div>
             <p className="heading">link</p>
-            <p className="title">
+            <a href={url} className="is-large">
               {url}
-            </p>
+            </a>
           </div>
         </div>
         <hr />
