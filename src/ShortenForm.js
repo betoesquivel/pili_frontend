@@ -28,7 +28,7 @@ class ShortenForm extends Component {
     });
   }
 
-  onClick(e) {
+  create(e) {
     e.preventDefault();
     this.props.shorten({
       variables: {
@@ -54,7 +54,7 @@ class ShortenForm extends Component {
     }
     return (
       <section className="section">
-        <form onSubmit={this.onClick.bind(this)}>
+        <form onSubmit={this.create.bind(this)}>
           <div className="columns">
             <div className="column field is-half is-offset-one-quarter">
               <label className="label title">Pili-fy your URL</label>
@@ -63,11 +63,11 @@ class ShortenForm extends Component {
                   className="input is-large is-danger"
                   type="url"
                   placeholder="http://your-long-url.com/goes/here"
-                  pattern="https?://.+"
+                  pattern="https?://.+\..+"
                   required={true}
                   onChange={this.updateText.bind(this)}
                   />
-                <span className="icon is-small">
+                <span className="icon is-large">
                   <i className={urlIcon}></i>
                 </span>
               </p>
